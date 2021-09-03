@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import TextInput from "../components/TextInput";
-import SubmitButton from "../components/SubmitButton";
 import { sendMessage } from "../reducks/messages/operations";
 import { getUserName, getMessagesList } from "../reducks/messages/selector";
 import { fetchMessageData } from "../reducks/messages/operations";
+import { Box } from "@material-ui/core";
+import UserMessage from "../components/UserMessage";
+import RegisterMessage from "../components/RegisterMessage";
+import Form from "../components/Form";
 
 const ChatRoom = () => {
   const dispatch = useDispatch();
@@ -15,7 +17,7 @@ const ChatRoom = () => {
   // console.log(messagesList);
 
   const [sentenceValue, setSentenceValue] = useState("");
-  const [messagesListValue, setMessagesListValue] = useState(messagesList);
+  const [] = useState(messagesList);
 
   const inputSentenceValue = useCallback(
     (event) => {
@@ -29,22 +31,13 @@ const ChatRoom = () => {
   }, [dispatch]);
 
   return (
-    <div>
-      <h2>チャットルーム</h2>
-      <p>メッセージを入力してください</p>
-      <div>
-        <p>{userName}</p>
-        <TextInput
-          label="メッセージ"
-          id="outlined-basic"
-          type="text"
-          required={true}
-          value={sentenceValue}
-          onChange={inputSentenceValue}
-        />
-      </div>
-      <SubmitButton
-        label="送信"
+    <>
+      <Form
+        subTitle={`ユーザ名：${userName}`}
+        textInputLabel="メッセージ"
+        value={sentenceValue}
+        onChange={inputSentenceValue}
+        buttonLabel="送信"
         onClick={() => [
           dispatch(
             sendMessage({
@@ -56,17 +49,26 @@ const ChatRoom = () => {
           fetchMessageData(),
         ]}
       />
-      <div>
+      <Box>
         {messagesList.map((value) => {
           return (
-            <div key={value.postId}>
-              <p>{value.sentence}</p>
-              <p>{value.username}</p>
-            </div>
+            <Box key={value.postId}>
+              {value.username === "春日" ? (
+                <UserMessage
+                  sentence={value.sentence}
+                  username={value.username}
+                />
+              ) : (
+                <RegisterMessage
+                  sentence={value.sentence}
+                  username={value.username}
+                />
+              )}
+            </Box>
           );
         })}
-      </div>
-    </div>
+      </Box>
+    </>
   );
 };
 

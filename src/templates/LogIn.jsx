@@ -1,12 +1,17 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firebase";
-import TextInput from "../components/TextInput";
-import SubmitButton from "../components/SubmitButton";
 import { LogInAction, FetchMessagesAction } from "../reducks/messages/actions";
+import { Box } from "@material-ui/core";
+import Form from "../components/Form";
+import { getMessagesList } from "../reducks/messages/selector";
+import UserMessage from "../components/UserMessage";
+import RegisterMessage from "../components/RegisterMessage";
 
 const LogIn = () => {
   const dispatch = useDispatch();
+  const selector = useSelector((state) => state);
+  const messagesList = getMessagesList(selector);
   const [username, setUsername] = useState("");
 
   const chats = [];
@@ -17,6 +22,10 @@ const LogIn = () => {
     },
     [setUsername]
   );
+
+  // useEffect(() => {
+  //   fetchMessageData();
+  // }, [dispatch]);
 
   useEffect(() => {
     db.ref("messages").on("child_added", (snapshot) => {
@@ -32,24 +41,35 @@ const LogIn = () => {
   }, []);
 
   return (
-    <div>
-      <h2>ユーザー名登録</h2>
-      <h5>ユーザ名を登録するとチャットルームに入室できます</h5>
-      <div>
-        <TextInput
-          label="ユーザー名"
-          id="outlined-basic"
-          type="text"
-          required={true}
-          value={username}
-          onChange={inputUserName}
-        />
-      </div>
-      <SubmitButton
-        label="ユーザー名を登録する"
+    <>
+      <Form
+        subTitle="ユーザー名を登録するとメッセージを送信できます"
+        textInputLabel="ユーザー名"
+        value={username}
+        onChange={inputUserName}
+        buttonLabel="登録"
         onClick={() => dispatch(LogInAction({ username: username }))}
       />
-    </div>
+      <Box>
+        {messagesList.map((value) => {
+          return (
+            <Box key={value.postId}>
+              {value.username === "春日" ? (
+                <UserMessage
+                  sentence={value.sentence}
+                  username={value.username}
+                />
+              ) : (
+                <RegisterMessage
+                  sentence={value.sentence}
+                  username={value.username}
+                />
+              )}
+            </Box>
+          );
+        })}
+      </Box>
+    </>
   );
 };
 
