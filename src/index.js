@@ -9,8 +9,6 @@ import { MessagesReducer } from "./reducks/messages/reducers";
 
 export const store = createStore(MessagesReducer, applyMiddleware(thunk));
 
-
-
 ReactDOM.render(
   <Provider store={store}>
     <App />
