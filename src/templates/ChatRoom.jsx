@@ -1,50 +1,58 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sendMessage } from "../reducks/messages/operations";
-import { getUserName, getMessagesList } from "../reducks/messages/selector";
+import {
+  getUserName,
+  getMessagesList,
+  getUserId,
+} from "../reducks/messages/selector";
 import { fetchMessageData } from "../reducks/messages/operations";
 import { Box } from "@material-ui/core";
 import UserMessage from "../components/UserMessage";
 import RegisterMessage from "../components/RegisterMessage";
 import Form from "../components/Form";
+import { CHARACTER_LIMIT } from "../utils/constants";
 
 const ChatRoom = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const userName = getUserName(selector);
+  const userId = getUserId(selector);
   const messagesList = getMessagesList(selector);
 
-  // console.log(messagesList);
-
   const [sentenceValue, setSentenceValue] = useState("");
-  const [] = useState(messagesList);
 
   const inputSentenceValue = useCallback(
-    (event) => {
-      setSentenceValue(event.target.value);
+    (e) => {
+      setSentenceValue(e.target.value);
     },
     [setSentenceValue]
   );
 
-  useEffect(() => {
-    fetchMessageData();
-  }, [dispatch]);
+  // useEffect(() => {
+  //   fetchMessageData();
+  // }, [dispatch]);
 
   return (
     <>
       <Form
-        subTitle={`ユーザ名：${userName}`}
+        subTitle={`ユーザー名：${userName}`}
+        subSentence="ようこそ！メッセージを入力し送信できます！"
         textInputLabel="メッセージ"
         value={sentenceValue}
         onChange={inputSentenceValue}
         buttonLabel="送信"
         onClick={() => [
-          dispatch(
-            sendMessage({
-              sentence: sentenceValue,
-              username: userName,
-            })
-          ),
+          sentenceValue === ""
+            ? alert("メッセージが入力されていません")
+            : sentenceValue.length > CHARACTER_LIMIT
+            ? alert("メッセージは200文字以下で入力してください")
+            : dispatch(
+                sendMessage({
+                  sentence: sentenceValue,
+                  username: userName,
+                })
+              ),
           setSentenceValue(""),
           fetchMessageData(),
         ]}
@@ -53,15 +61,19 @@ const ChatRoom = () => {
         {messagesList.map((value) => {
           return (
             <Box key={value.postId}>
-              {value.username === "春日" ? (
-                <UserMessage
-                  sentence={value.sentence}
-                  username={value.username}
-                />
+              {value.userId === userId ? (
+                <Box>
+                  <UserMessage
+                    sentence={value.sentence}
+                    username={value.username}
+                    timestamp={value.timestamp}
+                  />
+                </Box>
               ) : (
                 <RegisterMessage
                   sentence={value.sentence}
                   username={value.username}
+                  timestamp={value.timestamp}
                 />
               )}
             </Box>

@@ -2,10 +2,11 @@ import React from "react";
 import TextField from "@material-ui/core/TextField";
 import { createStyles } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
+import { SKY_BLUE, GRAY } from "../utils/constants";
 
 const styles = createStyles({
   notchedOutline: {
-    borderColor: "#00a7db !important",
+    borderColor: `${SKY_BLUE} !important`,
   },
 });
 
@@ -22,17 +23,17 @@ const TextInput = withStyles(styles)((props) => {
       variant="outlined"
       margin="dense"
       autoFocus={true}
-      style={{ width: "50%" }}
+      style={{ width: "40rem" }}
       InputProps={{
         classes: {
           notchedOutline: classes.notchedOutline,
         },
       }}
       InputLabelProps={{
-        style: { color: "#696969" },
+        style: { color: GRAY },
       }}
     />
   );
 });
 
-export default TextInput;
+export default React.memo(TextInput);

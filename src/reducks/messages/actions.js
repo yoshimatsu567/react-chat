@@ -5,6 +5,7 @@ export const LogInAction = (messageState) => {
     type: "LOG_IN",
     payload: {
       username: messageState.username,
+      userId: messageState.userId,
     },
   };
 };
@@ -16,6 +17,7 @@ export const LogOutAction = () => {
     type: "LOG_OUT",
     payload: {
       username: "",
+      userId: "",
     },
   };
 };
@@ -28,7 +30,9 @@ export const PostAction = (messageState) => {
     payload: {
       sentence: messageState.sentence,
       username: messageState.username,
+      userId: messageState.userId,
       postId: messageState.postId,
+      timestamp: messageState.timestamp,
     },
   };
 };

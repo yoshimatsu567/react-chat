@@ -7,8 +7,11 @@ import createStore from "./reducks/store/store";
 import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { MessagesReducer } from "./reducks/messages/reducers";
+import { createTheme } from "@material-ui/core";
 
 export const store = createStore(MessagesReducer, applyMiddleware(thunk));
+
+
 
 ReactDOM.render(
   <Provider store={store}>

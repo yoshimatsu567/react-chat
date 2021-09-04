@@ -3,8 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 import { LogOutAction } from "../reducks/messages/actions";
 import { getUserName } from "../reducks/messages/selector";
 import React from "react";
+import { BLACK } from "../utils/constants";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  MainTitle: {
+    flexGrow: 1,
+  },
+  LogOutButton: { color: BLACK, textAlign: "right" },
+});
 
 const Header = () => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const userName = getUserName(selector);
@@ -12,12 +22,12 @@ const Header = () => {
   return (
     <AppBar position="sticky" color="default">
       <Toolbar>
-        <Typography variant="h5" style={{ flexGrow: 1 }}>
+        <Typography variant="h5" className={classes.MainTitle}>
           チャットアプリ
         </Typography>
         {userName ? (
           <Button
-            style={{ color: "#000", textAlign: "right" }}
+            className={classes.LogOutButton}
             color="inherit"
             onClick={() => dispatch(LogOutAction())}
           >

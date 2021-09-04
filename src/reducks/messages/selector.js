@@ -7,9 +7,14 @@ export const getUserName = createSelector(
   (state) => state.username
 );
 
-export const getMessageId = createSelector(
+export const getUserId = createSelector(
   [messagesSelector],
-  (state) => state.messageId
+  (state) => state.userId
+);
+
+export const getTimeStamp = createSelector(
+  [messagesSelector],
+  (state) => state.timestamp
 );
 
 const messagesListSelector = (state) => state.messagesList;
