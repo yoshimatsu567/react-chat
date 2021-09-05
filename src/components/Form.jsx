@@ -5,19 +5,30 @@ import { Box, Typography } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles } from "@material-ui/styles";
+import { WHITE } from "../utils/constants";
 
 const useStyles = makeStyles({
   FormWrapper: {
-    paddingTop: "3rem",
-    paddingBottom: "4rem",
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    borderRadius: "1rem",
+    width: "98%",
+    textAlign: "center",
+    marginLeft: "auto",
+    marginRight: "auto",
+    backgroundColor: WHITE,
   },
   SubTitle: {
+    paddingTop: "2rem",
     paddingBottom: "1rem",
   },
   SubSentence: {
     paddingBottom: "1rem",
   },
   InputAndButtonWrapper: {
+    paddingRight: "0.5rem",
+    paddingLeft: "0.5rem",
+    paddingBottom: "2rem",
     display: "flex",
     justifyContent: "center",
   },
@@ -29,13 +40,13 @@ const useSize = () => {
   return { isMobileSize };
 };
 
-const Form = (props) => {
+const Form = React.memo((props) => {
   const classes = useStyles();
   const { isMobileSize } = useSize();
 
   return (
     <>
-      <Box color="inherit" className={classes.FormWrapper}>
+      <Box color="inherit" className={classes.FormWrapper} boxShadow={5}>
         {isMobileSize ? (
           <Typography variant="body2" className={classes.SubTitle}>
             {props.subTitle}
@@ -66,6 +77,6 @@ const Form = (props) => {
       </Box>
     </>
   );
-};
+});
 
 export default Form;

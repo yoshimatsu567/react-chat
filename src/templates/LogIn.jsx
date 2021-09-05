@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { db } from "../firebase";
 import { LogInAction, FetchMessagesAction } from "../reducks/messages/actions";
@@ -23,13 +23,6 @@ const LogIn = () => {
 
   const chats = [];
 
-  const inputUserName = useCallback(
-    (e) => {
-      setUsername(e.target.value);
-    },
-    [setUsername]
-  );
-
   useEffect(() => {
     db.ref("messages").on("child_added", (snapshot) => {
       snapshot.forEach((snapshot) => {
@@ -42,7 +35,51 @@ const LogIn = () => {
         })
       );
     });
-  }, [dispatch]);
+  }, []);
+
+  const inputUserName = useCallback(
+    (e) => {
+      setUsername(e.target.value);
+    },
+    [setUsername]
+  );
+
+  const LogInForm = React.memo(() => {
+    return (
+      <Form
+        subTitle="ユーザー名を登録すると利用できます"
+        textInputLabel="ユーザー名"
+        value={username}
+        onChange={inputUserName}
+        buttonLabel="登録"
+        onClick={() =>
+          username === ""
+            ? alert("ユーザー名が入力されていません")
+            : username.length > USERNAME_LIMIT
+            ? alert("ユーザー名は15文字以下で設定してください")
+            : dispatch(LogInAction({ username: username, userId: userId }))
+        }
+      />
+    );
+  }, [inputUserName]);
+
+  const MessagesArea = React.memo(() => {
+    return (
+      <Box>
+        {messagesList.map((value) => {
+          return (
+            <Box key={value.postId}>
+              <RegisterMessage
+                sentence={value.sentence}
+                username={value.username}
+                timestamp={value.timestamp}
+              />
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  }, [messagesList]);
 
   return (
     <>
@@ -60,19 +97,8 @@ const LogIn = () => {
             : dispatch(LogInAction({ username: username, userId: userId }))
         }
       />
-      <Box>
-        {messagesList.map((value) => {
-          return (
-            <Box key={value.postId}>
-              <RegisterMessage
-                sentence={value.sentence}
-                username={value.username}
-                timestamp={value.timestamp}
-              />
-            </Box>
-          );
-        })}
-      </Box>
+      {/* <LogInForm /> */}
+      <MessagesArea />
     </>
   );
 };

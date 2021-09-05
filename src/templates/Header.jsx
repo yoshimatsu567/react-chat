@@ -7,6 +7,9 @@ import { BLACK } from "../utils/constants";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
+  AppBarStyle: {
+    backgroundColor: "white",
+  },
   MainTitle: {
     flexGrow: 1,
   },
@@ -20,7 +23,7 @@ const Header = () => {
   const userName = getUserName(selector);
 
   return (
-    <AppBar position="sticky" color="default">
+    <AppBar position="sticky" color="default" className={classes.AppBarStyle}>
       <Toolbar>
         <Typography variant="h5" className={classes.MainTitle}>
           チャットアプリ

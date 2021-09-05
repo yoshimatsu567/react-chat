@@ -33,6 +33,34 @@ const ChatRoom = () => {
   //   fetchMessageData();
   // }, [dispatch]);
 
+  const MessagesArea = React.memo(() => {
+    return (
+      <Box>
+        {messagesList.map((value) => {
+          return (
+            <Box key={value.postId}>
+              {value.userId === userId ? (
+                <Box>
+                  <UserMessage
+                    sentence={value.sentence}
+                    username={value.username}
+                    timestamp={value.timestamp}
+                  />
+                </Box>
+              ) : (
+                <RegisterMessage
+                  sentence={value.sentence}
+                  username={value.username}
+                  timestamp={value.timestamp}
+                />
+              )}
+            </Box>
+          );
+        })}
+      </Box>
+    );
+  }, [messagesList]);
+
   return (
     <>
       <Form
@@ -57,29 +85,7 @@ const ChatRoom = () => {
           fetchMessageData(),
         ]}
       />
-      <Box>
-        {messagesList.map((value) => {
-          return (
-            <Box key={value.postId}>
-              {value.userId === userId ? (
-                <Box>
-                  <UserMessage
-                    sentence={value.sentence}
-                    username={value.username}
-                    timestamp={value.timestamp}
-                  />
-                </Box>
-              ) : (
-                <RegisterMessage
-                  sentence={value.sentence}
-                  username={value.username}
-                  timestamp={value.timestamp}
-                />
-              )}
-            </Box>
-          );
-        })}
-      </Box>
+      <MessagesArea />
     </>
   );
 };

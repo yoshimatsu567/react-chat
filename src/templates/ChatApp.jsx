@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import LogIn from "../templates/LogIn";
 import ChatRoom from "../templates/ChatRoom";
 import { getUserName } from "../reducks/messages/selector";
-import Header from "../components/Header";
+import Header from "./Header";
 import { BLACK, WHITE } from "../utils/constants";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";

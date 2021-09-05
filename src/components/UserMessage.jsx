@@ -40,8 +40,7 @@ const UserMessage = React.memo((props) => {
       <Typography className={classes.TimeStyle}>
         {props.timestamp.minute < 1
           ? "数秒前"
-          : `${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:
-        ${props.timestamp.minute}`}
+          : `${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:${props.timestamp.minute}`}
       </Typography>
       <Grid item className={classes.GridItem} xs={5}>
         <Typography className={classes.SentenceStyle}>
