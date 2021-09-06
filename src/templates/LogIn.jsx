@@ -1,41 +1,28 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { db } from "../firebase";
-import { LogInAction, FetchMessagesAction } from "../reducks/messages/actions";
+import { LogInAction } from "../reducks/messages/actions";
 import { Box } from "@material-ui/core";
 import Form from "../components/Form";
-import { getMessagesList } from "../reducks/messages/selector";
+import { getMessagesList, getIsLoading } from "../reducks/messages/selector";
 import RegisterMessage from "../components/RegisterMessage";
 import UUID from "uuidjs";
-import { useMemo } from "react";
 import { fetchMessageData } from "../reducks/messages/operations";
 import { USERNAME_LIMIT } from "../utils/constants";
+import IsLoading from "../components/IsLoading";
 
 const LogIn = () => {
   const dispatch = useDispatch();
-  const selector = useSelector((state) => state);
+  const selector = useSelector((state) => {
+    return state;
+  });
   const messagesList = getMessagesList(selector);
+  const isLoading = getIsLoading(selector);
   const [username, setUsername] = useState("");
-  // console.log(messagesList);
-
   const userId = UUID.generate();
-  // console.log(userId);
-
-  const chats = [];
 
   useEffect(() => {
-    db.ref("messages").on("child_added", (snapshot) => {
-      snapshot.forEach((snapshot) => {
-        chats.push(snapshot.val());
-      });
-      const reverseChats = [...chats].reverse();
-      dispatch(
-        FetchMessagesAction({
-          data: reverseChats,
-        })
-      );
-    });
-  }, []);
+    dispatch(fetchMessageData());
+  }, [dispatch]);
 
   const inputUserName = useCallback(
     (e) => {
@@ -44,42 +31,23 @@ const LogIn = () => {
     [setUsername]
   );
 
-  const LogInForm = React.memo(() => {
-    return (
-      <Form
-        subTitle="ユーザー名を登録すると利用できます"
-        textInputLabel="ユーザー名"
-        value={username}
-        onChange={inputUserName}
-        buttonLabel="登録"
-        onClick={() =>
-          username === ""
-            ? alert("ユーザー名が入力されていません")
-            : username.length > USERNAME_LIMIT
-            ? alert("ユーザー名は15文字以下で設定してください")
-            : dispatch(LogInAction({ username: username, userId: userId }))
-        }
-      />
-    );
-  }, [inputUserName]);
-
   const MessagesArea = React.memo(() => {
     return (
       <Box>
         {messagesList.map((value) => {
           return (
-            <Box key={value.postId}>
+            <Box key={value.message.postId}>
               <RegisterMessage
-                sentence={value.sentence}
-                username={value.username}
-                timestamp={value.timestamp}
+                sentence={value.message.sentence}
+                username={value.message.username}
+                timestamp={value.message.timestamp}
               />
             </Box>
           );
         })}
       </Box>
     );
-  }, [messagesList]);
+  }, []);
 
   return (
     <>
@@ -97,8 +65,7 @@ const LogIn = () => {
             : dispatch(LogInAction({ username: username, userId: userId }))
         }
       />
-      {/* <LogInForm /> */}
-      <MessagesArea />
+      {isLoading ? <IsLoading /> : <MessagesArea />}
     </>
   );
 };

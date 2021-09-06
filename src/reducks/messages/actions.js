@@ -37,12 +37,24 @@ export const PostAction = (messageState) => {
   };
 };
 
+export const START_IS_LOADING = "START_IS_LOADING";
+
+export const StartIsLoadingAction = (messagesListState) => {
+  return {
+    type: "START_IS_LOADING",
+    payload: {
+      isLoading: messagesListState.isLoading,
+    },
+  };
+};
+
 export const FETCH_MESSAGES = "FETCH_MESSAGES";
 
 export const FetchMessagesAction = (messagesListState) => {
   return {
     type: "FETCH_MESSAGES",
     payload: {
+      isLoading: messagesListState.isLoading,
       data: messagesListState.data,
     },
   };

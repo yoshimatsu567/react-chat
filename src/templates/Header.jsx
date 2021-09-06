@@ -36,9 +36,7 @@ const Header = () => {
           >
             ログアウト
           </Button>
-        ) : (
-          ""
-        )}
+        ) : null}
       </Toolbar>
     </AppBar>
   );

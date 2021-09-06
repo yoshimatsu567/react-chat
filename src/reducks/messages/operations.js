@@ -1,6 +1,10 @@
 import { db } from "../../firebase";
 import dayjs from "dayjs";
-import { PostAction, FetchMessagesAction } from "./actions";
+import {
+  PostAction,
+  FetchMessagesAction,
+  StartIsLoadingAction,
+} from "./actions";
 
 const timeStamp = () => {
   const postedTime = dayjs();
@@ -30,11 +34,7 @@ export const sendMessage = ({ sentence, username }) => {
   return async (dispatch, getState) => {
     const state = getState();
     const userId = state.messages.userId;
-    // console.log(userId);
-
     const timestamp = timeStamp();
-
-    console.log(timestamp);
 
     const data = {
       message: {
@@ -72,19 +72,18 @@ export const sendMessage = ({ sentence, username }) => {
 
 export const fetchMessageData = () => {
   return async (dispatch) => {
-    const chats = [];
-    db.ref("messages").on("child_added", (snapshot) => {
-      snapshot.forEach((snap) => {
-        chats.push(snap.val());
-      });
-
-      Promise.all(chats);
-
-      const reverseChats = [...chats].reverse();
+    dispatch(StartIsLoadingAction({ isLoading: true }));
+    db.ref("messages").on("value", (snapshot) => {
+      const chats = snapshot.val();
+      let chatsData = [];
+      for (var key in chats) {
+        chatsData.push({
+          ...chats[key],
+        });
+      }
+      const reverseChatsData = [...chatsData].reverse();
       dispatch(
-        FetchMessagesAction({
-          data: reverseChats,
-        })
+        FetchMessagesAction({ data: reverseChatsData, isLoading: false })
       );
     });
   };

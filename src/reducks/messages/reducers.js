@@ -31,12 +31,16 @@ export const MessagesListReducer = (
   action
 ) => {
   switch (action.type) {
+    case Actions.START_IS_LOADING:
+      return {
+        ...state,
+        ...action.payload,
+      };
     case Actions.FETCH_MESSAGES:
       return {
         ...state,
         ...action.payload,
       };
-
     default:
       return state;
   }

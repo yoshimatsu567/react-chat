@@ -44,9 +44,7 @@ const RegisterMessage = React.memo((props) => {
         </Typography>
       </Grid>
       <Typography className={classes.TimeStyle}>
-        {props.timestamp.minute < 1
-          ? "数秒前"
-          : `${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:${props.timestamp.minute}`}
+        {`${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:${props.timestamp.minute}`}
       </Typography>
     </Grid>
   );

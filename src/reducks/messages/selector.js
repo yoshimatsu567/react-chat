@@ -23,3 +23,8 @@ export const getMessagesList = createSelector(
   [messagesListSelector],
   (state) => state.data
 );
+
+export const getIsLoading = createSelector(
+  [messagesListSelector],
+  (state) => state.isLoading
+);

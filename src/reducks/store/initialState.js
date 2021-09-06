@@ -7,6 +7,7 @@ const initialState = {
     timestamp: "",
   },
   messagesList: {
+    isLoading: false,
     data: [],
   },
 };

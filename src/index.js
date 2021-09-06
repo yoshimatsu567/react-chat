@@ -2,26 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import { Provider } from "react-redux";
-import createStore from "./reducks/store/store";
-import { applyMiddleware } from "redux";
+import { allReducers } from "../src/reducks/store/store";
+import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
-import { MessagesReducer } from "./reducks/messages/reducers";
-import { createMuiTheme } from "@material-ui/core/styles";
-import { MuiThemeProvider } from "@material-ui/core/styles";
+import { StylesProvider } from "@material-ui/core/styles";
+import "typeface-cormorant";
 
-const theme = createMuiTheme({
-  typography: {
-    fontFamily: '"M PLUS Rounded 2c", "sans-serif"',
-  },
-});
-
-export const store = createStore(MessagesReducer, applyMiddleware(thunk));
+export const store = createStore(allReducers, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <MuiThemeProvider theme={theme}>
+  <StylesProvider injectFirst>
     <Provider store={store}>
       <App />
     </Provider>
-  </MuiThemeProvider>,
+  </StylesProvider>,
   document.getElementById("root")
 );

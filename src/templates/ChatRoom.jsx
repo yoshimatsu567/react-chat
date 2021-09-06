@@ -5,6 +5,7 @@ import {
   getUserName,
   getMessagesList,
   getUserId,
+  getIsLoading,
 } from "../reducks/messages/selector";
 import { fetchMessageData } from "../reducks/messages/operations";
 import { Box } from "@material-ui/core";
@@ -12,12 +13,14 @@ import UserMessage from "../components/UserMessage";
 import RegisterMessage from "../components/RegisterMessage";
 import Form from "../components/Form";
 import { CHARACTER_LIMIT } from "../utils/constants";
+import IsLoading from "../components/IsLoading";
 
 const ChatRoom = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const userName = getUserName(selector);
   const userId = getUserId(selector);
+  const isLoading = getIsLoading(selector);
   const messagesList = getMessagesList(selector);
 
   const [sentenceValue, setSentenceValue] = useState("");
@@ -29,9 +32,9 @@ const ChatRoom = () => {
     [setSentenceValue]
   );
 
-  // useEffect(() => {
-  //   fetchMessageData();
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchMessageData());
+  }, [dispatch]);
 
   const MessagesArea = React.memo(() => {
     return (
@@ -42,16 +45,16 @@ const ChatRoom = () => {
               {value.userId === userId ? (
                 <Box>
                   <UserMessage
-                    sentence={value.sentence}
-                    username={value.username}
-                    timestamp={value.timestamp}
+                    sentence={value.message.sentence}
+                    username={value.message.username}
+                    timestamp={value.message.timestamp}
                   />
                 </Box>
               ) : (
                 <RegisterMessage
-                  sentence={value.sentence}
-                  username={value.username}
-                  timestamp={value.timestamp}
+                  sentence={value.message.sentence}
+                  username={value.message.username}
+                  timestamp={value.message.timestamp}
                 />
               )}
             </Box>
@@ -82,10 +85,9 @@ const ChatRoom = () => {
                 })
               ),
           setSentenceValue(""),
-          fetchMessageData(),
         ]}
       />
-      <MessagesArea />
+      {isLoading ? <IsLoading /> : <MessagesArea />}
     </>
   );
 };
