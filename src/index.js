@@ -6,7 +6,6 @@ import { allReducers } from "../src/reducks/store/store";
 import { applyMiddleware, createStore } from "redux";
 import thunk from "redux-thunk";
 import { StylesProvider } from "@material-ui/core/styles";
-import "typeface-cormorant";
 
 export const store = createStore(allReducers, applyMiddleware(thunk));
 
