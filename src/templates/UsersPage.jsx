@@ -24,6 +24,7 @@ const UsersPage = () => {
   const messagesList = getMessagesList(selector);
 
   const [sentenceValue, setSentenceValue] = useState("");
+  const [typing, setTyping] = useState(false);
 
   const inputSentenceValue = useCallback(
     (e) => {
@@ -35,6 +36,40 @@ const UsersPage = () => {
   useEffect(() => {
     dispatch(fetchMessageData());
   }, [dispatch]);
+
+  const onClick = () => {
+    return [
+      sentenceValue === ""
+        ? alert("メッセージが入力されていません")
+        : sentenceValue.length > CHARACTER_LIMIT
+        ? alert("メッセージは200文字以下で入力してください")
+        : dispatch(
+            sendMessage({
+              sentence: sentenceValue,
+              username: userName,
+            })
+          ),
+      setSentenceValue(""),
+    ];
+  };
+
+  const onKeyDown = (e) => {
+    return sentenceValue === "" && e.key === "Enter"
+      ? alert("メッセージが入力されていません")
+      : sentenceValue.length > CHARACTER_LIMIT && e.key === "Enter"
+      ? alert("メッセージは200文字以下で入力してください")
+      : e.key === "Enter" && !typing
+      ? [
+          dispatch(
+            sendMessage({
+              sentence: sentenceValue,
+              username: userName,
+            })
+          ),
+          setSentenceValue(""),
+        ]
+      : undefined;
+  };
 
   const MessagesArea = React.memo(() => {
     return (
@@ -71,19 +106,10 @@ const UsersPage = () => {
         value={sentenceValue}
         onChange={inputSentenceValue}
         buttonLabel="送信"
-        onClick={() => [
-          sentenceValue === ""
-            ? alert("メッセージが入力されていません")
-            : sentenceValue.length > CHARACTER_LIMIT
-            ? alert("メッセージは200文字以下で入力してください")
-            : dispatch(
-                sendMessage({
-                  sentence: sentenceValue,
-                  username: userName,
-                })
-              ),
-          setSentenceValue(""),
-        ]}
+        onClick={() => onClick()}
+        onCompositionStart={() => setTyping(true)}
+        onCompositionEnd={() => setTyping(false)}
+        onKeyDown={(e) => onKeyDown(e)}
       />
       {isLoading ? <IsLoading /> : <MessagesArea />}
     </>

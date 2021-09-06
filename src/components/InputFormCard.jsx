@@ -52,6 +52,9 @@ const InputFormCard = (props) => {
             textInputLabel={props.textInputLabel}
             value={props.value}
             onChange={props.onChange}
+            onCompositionStart={props.onCompositionStart}
+            onCompositionEnd={props.onCompositionEnd}
+            onKeyDown={props.onKeyDown}
           />
           <SubmitButton
             buttonLabel={props.buttonLabel}

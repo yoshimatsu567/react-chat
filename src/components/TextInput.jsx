@@ -12,6 +12,7 @@ const styles = createStyles({
 
 const TextInput = withStyles(styles)((props) => {
   const { classes } = props;
+
   return (
     <TextField
       id="outlined-basic"
@@ -32,6 +33,9 @@ const TextInput = withStyles(styles)((props) => {
       InputLabelProps={{
         style: { color: GRAY },
       }}
+      onCompositionStart={props.onCompositionStart}
+      onCompositionEnd={props.onCompositionEnd}
+      onKeyDown={props.onKeyDown}
     />
   );
 });

@@ -18,6 +18,7 @@ const LogInPage = () => {
   const messagesList = getMessagesList(selector);
   const isLoading = getIsLoading(selector);
   const [username, setUsername] = useState("");
+  const [typing, setTyping] = useState(false);
   const userId = UUID.generate();
 
   useEffect(() => {
@@ -30,6 +31,24 @@ const LogInPage = () => {
     },
     [setUsername]
   );
+
+  const onClick = () => {
+    return username === ""
+      ? alert("ユーザー名が入力されていません")
+      : username.length > USERNAME_LIMIT
+      ? alert("ユーザー名は15文字以下で設定してください")
+      : dispatch(LogInAction({ username: username, userId: userId }));
+  };
+
+  const onKeyDown = (e) => {
+    return username === "" && e.key === "Enter"
+      ? alert("ユーザー名が入力されていません")
+      : username.length > USERNAME_LIMIT && e.key === "Enter"
+      ? alert("ユーザー名は15文字以下で設定してください")
+      : e.key === "Enter" && !typing
+      ? [dispatch(LogInAction({ username: username, userId: userId }))]
+      : undefined;
+  };
 
   const MessagesArea = React.memo(() => {
     return (
@@ -57,13 +76,10 @@ const LogInPage = () => {
         value={username}
         onChange={inputUserName}
         buttonLabel="登録"
-        onClick={() =>
-          username === ""
-            ? alert("ユーザー名が入力されていません")
-            : username.length > USERNAME_LIMIT
-            ? alert("ユーザー名は15文字以下で設定してください")
-            : dispatch(LogInAction({ username: username, userId: userId }))
-        }
+        onClick={() => onClick()}
+        onCompositionStart={() => setTyping(true)}
+        onCompositionEnd={() => setTyping(false)}
+        onKeyDown={(e) => onKeyDown(e)}
       />
       {isLoading ? <IsLoading /> : <MessagesArea />}
     </>
