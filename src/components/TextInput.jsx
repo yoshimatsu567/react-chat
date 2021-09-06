@@ -36,4 +36,4 @@ const TextInput = withStyles(styles)((props) => {
   );
 });
 
-export default React.memo(TextInput);
+export default TextInput;

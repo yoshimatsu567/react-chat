@@ -1,6 +1,6 @@
 import React from "react";
-import { Box } from "@material-ui/core";
 import Loader from "react-loader-spinner";
+import { Box } from "@material-ui/core";
 import { SKY_BLUE } from "../utils/constants";
 
 const IsLoading = () => {

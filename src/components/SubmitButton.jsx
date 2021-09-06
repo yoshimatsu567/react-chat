@@ -1,13 +1,13 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
-import { SKY_BLUE } from "../utils/constants";
 import { makeStyles } from "@material-ui/styles";
+import { SKY_BLUE } from "../utils/constants";
 
 const useStyles = makeStyles({
   ButtonStyle: { marginLeft: "1rem", backgroundColor: SKY_BLUE },
 });
 
-const SubmitButton = React.memo((props) => {
+const SubmitButton = (props) => {
   const classes = useStyles();
   return (
     <Button
@@ -19,6 +19,6 @@ const SubmitButton = React.memo((props) => {
       {props.buttonLabel}
     </Button>
   );
-});
+};
 
-export default React.memo(SubmitButton);
+export default SubmitButton;

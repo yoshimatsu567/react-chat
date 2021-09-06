@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid } from "@material-ui/core";
-import { WHITE, LIGHT_GRAY, GRAY } from "../utils/constants";
 import { makeStyles } from "@material-ui/styles";
+import { WHITE, LIGHT_GRAY, GRAY } from "../utils/constants";
 
 const useStyles = makeStyles({
   GridContainer: {
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
   },
 });
 
-const RegisterMessage = React.memo((props) => {
+const RegisterMessage = (props) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.GridContainer}>
@@ -48,6 +48,6 @@ const RegisterMessage = React.memo((props) => {
       </Typography>
     </Grid>
   );
-});
+};
 
-export default React.memo(RegisterMessage);
+export default RegisterMessage;

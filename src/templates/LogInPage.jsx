@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { LogInAction } from "../reducks/messages/actions";
-import { Box } from "@material-ui/core";
-import Form from "../components/Form";
-import { getMessagesList, getIsLoading } from "../reducks/messages/selector";
-import RegisterMessage from "../components/RegisterMessage";
 import UUID from "uuidjs";
+import { LogInAction } from "../reducks/messages/actions";
+import { getMessagesList, getIsLoading } from "../reducks/messages/selector";
 import { fetchMessageData } from "../reducks/messages/operations";
-import { USERNAME_LIMIT } from "../utils/constants";
+import InputFormCard from "../components/InputFormCard";
 import IsLoading from "../components/IsLoading";
+import RegisterMessage from "../components/RegisterMessage";
+import { Box } from "@material-ui/core";
+import { USERNAME_LIMIT } from "../utils/constants";
 
-const LogIn = () => {
+const LogInPage = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => {
     return state;
@@ -51,7 +51,7 @@ const LogIn = () => {
 
   return (
     <>
-      <Form
+      <InputFormCard
         subTitle="ユーザー名を登録すると利用できます"
         textInputLabel="ユーザー名"
         value={username}
@@ -70,4 +70,4 @@ const LogIn = () => {
   );
 };
 
-export default LogIn;
+export default LogInPage;

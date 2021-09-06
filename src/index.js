@@ -1,18 +1,14 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import App from "./App";
 import { Provider } from "react-redux";
-import { allReducers } from "../src/reducks/store/store";
-import { applyMiddleware, createStore } from "redux";
-import thunk from "redux-thunk";
+import ReactDOM from "react-dom";
+import ChatApp from "../src/templates/ChatApp";
 import { StylesProvider } from "@material-ui/core/styles";
-
-export const store = createStore(allReducers, applyMiddleware(thunk));
+import { store } from "../src/reducks/store/store";
 
 ReactDOM.render(
   <StylesProvider injectFirst>
     <Provider store={store}>
-      <App />
+      <ChatApp />
     </Provider>
   </StylesProvider>,
   document.getElementById("root")

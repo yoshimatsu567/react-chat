@@ -1,19 +1,16 @@
-import { Button, AppBar, Toolbar, Typography } from "@material-ui/core";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { LogOutAction } from "../reducks/messages/actions";
 import { getUserName } from "../reducks/messages/selector";
-import React from "react";
-import { BLACK } from "../utils/constants";
+import HeaderLogOutButton from "../components/HeaderLogOutButton";
+import HeaderMainTitle from "../components/HeaderMainTitle";
+import { AppBar, Toolbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   AppBarStyle: {
     backgroundColor: "white",
   },
-  MainTitle: {
-    flexGrow: 1,
-  },
-  LogOutButton: { color: BLACK, textAlign: "right" },
 });
 
 const Header = () => {
@@ -25,18 +22,11 @@ const Header = () => {
   return (
     <AppBar position="sticky" color="default" className={classes.AppBarStyle}>
       <Toolbar>
-        <Typography variant="h5" className={classes.MainTitle}>
-          チャットアプリ
-        </Typography>
-        {userName ? (
-          <Button
-            className={classes.LogOutButton}
-            color="inherit"
-            onClick={() => dispatch(LogOutAction())}
-          >
-            ログアウト
-          </Button>
-        ) : null}
+        <HeaderMainTitle />
+        <HeaderLogOutButton
+          userName={userName}
+          onClick={() => dispatch(LogOutAction())}
+        />
       </Toolbar>
     </AppBar>
   );

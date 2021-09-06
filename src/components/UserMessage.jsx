@@ -1,7 +1,7 @@
 import React from "react";
 import { Typography, Grid } from "@material-ui/core";
-import { GRAY, WHITE, SKY_BLUE } from "../utils/constants";
 import { makeStyles } from "@material-ui/styles";
+import { GRAY, WHITE, SKY_BLUE } from "../utils/constants";
 
 const useStyles = makeStyles({
   GridContainer: {
@@ -33,14 +33,12 @@ const useStyles = makeStyles({
   },
 });
 
-const UserMessage = React.memo((props) => {
+const UserMessage = (props) => {
   const classes = useStyles();
   return (
     <Grid container className={classes.GridContainer}>
       <Typography className={classes.TimeStyle}>
-        {props.timestamp.minute < 1
-          ? "数秒前"
-          : `${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:${props.timestamp.minute}`}
+        {`${props.timestamp.month}/${props.timestamp.date} ${props.timestamp.hour}:${props.timestamp.minute}`}
       </Typography>
       <Grid item className={classes.GridItem} xs={5}>
         <Typography className={classes.SentenceStyle}>
@@ -52,6 +50,6 @@ const UserMessage = React.memo((props) => {
       </Grid>
     </Grid>
   );
-});
+};
 
-export default React.memo(UserMessage);
+export default UserMessage;

@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import LogIn from "../templates/LogIn";
-import ChatRoom from "../templates/ChatRoom";
 import { getUserName } from "../reducks/messages/selector";
+import LogIn from "./LogInPage";
+import ChatRoom from "./UsersPage";
 import Header from "./Header";
-import { BLACK, WHITE } from "../utils/constants";
 import { Box } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import { BLACK, WHITE } from "../utils/constants";
 
 const useStyles = makeStyles({
   MainStyle: {

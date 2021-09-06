@@ -1,7 +1,9 @@
 import React from "react";
-import TextInput from "../components/TextInput";
-import SubmitButton from "../components/SubmitButton";
-import { Box, Typography } from "@material-ui/core";
+import TextInput from "./TextInput";
+import SubmitButton from "./SubmitButton";
+import SubTitle from "./SubTitle";
+import SubSentence from "./SubSentence";
+import { Box } from "@material-ui/core";
 import { useTheme } from "@material-ui/core/styles";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { makeStyles } from "@material-ui/styles";
@@ -18,13 +20,6 @@ const useStyles = makeStyles({
     marginRight: "auto",
     backgroundColor: WHITE,
   },
-  SubTitle: {
-    paddingTop: "2rem",
-    paddingBottom: "1rem",
-  },
-  SubSentence: {
-    paddingBottom: "1rem",
-  },
   InputAndButtonWrapper: {
     paddingRight: "0.5rem",
     paddingLeft: "0.5rem",
@@ -40,29 +35,18 @@ const useSize = () => {
   return { isMobileSize };
 };
 
-const Form = React.memo((props) => {
+const InputFormCard = (props) => {
   const classes = useStyles();
   const { isMobileSize } = useSize();
 
   return (
     <>
       <Box color="inherit" className={classes.FormWrapper} boxShadow={5}>
-        {isMobileSize ? (
-          <Typography variant="body2" className={classes.SubTitle}>
-            {props.subTitle}
-          </Typography>
-        ) : (
-          <Typography className={classes.SubTitle}>{props.subTitle}</Typography>
-        )}
-        {isMobileSize ? (
-          <Typography variant="subtitle2" className={classes.SubSentence}>
-            {props.subSentence}
-          </Typography>
-        ) : (
-          <Typography className={classes.SubSentence}>
-            {props.subSentence}
-          </Typography>
-        )}
+        <SubTitle isMobileSize={isMobileSize} subTitle={props.subTitle} />
+        <SubSentence
+          isMobileSize={isMobileSize}
+          subSentence={props.subSentence}
+        />
         <Box className={classes.InputAndButtonWrapper}>
           <TextInput
             textInputLabel={props.textInputLabel}
@@ -77,6 +61,6 @@ const Form = React.memo((props) => {
       </Box>
     </>
   );
-});
+};
 
-export default Form;
+export default InputFormCard;

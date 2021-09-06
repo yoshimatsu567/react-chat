@@ -8,14 +8,14 @@ import {
   getIsLoading,
 } from "../reducks/messages/selector";
 import { fetchMessageData } from "../reducks/messages/operations";
-import { Box } from "@material-ui/core";
 import UserMessage from "../components/UserMessage";
 import RegisterMessage from "../components/RegisterMessage";
-import Form from "../components/Form";
-import { CHARACTER_LIMIT } from "../utils/constants";
+import InputFormCard from "../components/InputFormCard";
 import IsLoading from "../components/IsLoading";
+import { Box } from "@material-ui/core";
+import { CHARACTER_LIMIT } from "../utils/constants";
 
-const ChatRoom = () => {
+const UsersPage = () => {
   const dispatch = useDispatch();
   const selector = useSelector((state) => state);
   const userName = getUserName(selector);
@@ -41,15 +41,13 @@ const ChatRoom = () => {
       <Box>
         {messagesList.map((value) => {
           return (
-            <Box key={value.postId}>
+            <Box key={value.message.postId}>
               {value.message.userId === userId ? (
-                <Box>
-                  <UserMessage
-                    sentence={value.message.sentence}
-                    username={value.message.username}
-                    timestamp={value.message.timestamp}
-                  />
-                </Box>
+                <UserMessage
+                  sentence={value.message.sentence}
+                  username={value.message.username}
+                  timestamp={value.message.timestamp}
+                />
               ) : (
                 <RegisterMessage
                   sentence={value.message.sentence}
@@ -66,8 +64,8 @@ const ChatRoom = () => {
 
   return (
     <>
-      <Form
-        subTitle={`ユーザー名：${userName}`}
+      <InputFormCard
+        subTitle={`${userName}さん`}
         subSentence="ようこそ！メッセージを入力し送信できます！"
         textInputLabel="メッセージ"
         value={sentenceValue}
@@ -92,4 +90,4 @@ const ChatRoom = () => {
   );
 };
 
-export default ChatRoom;
+export default UsersPage;
