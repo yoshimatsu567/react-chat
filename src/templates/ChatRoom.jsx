@@ -42,7 +42,7 @@ const ChatRoom = () => {
         {messagesList.map((value) => {
           return (
             <Box key={value.postId}>
-              {value.userId === userId ? (
+              {value.message.userId === userId ? (
                 <Box>
                   <UserMessage
                     sentence={value.message.sentence}
