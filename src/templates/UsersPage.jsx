@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { sendMessage } from "../reducks/messages/operations";
+import React, { useState, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendMessage } from '../reducks/messages/operations';
 import {
   getUserName,
   getMessagesList,
   getUserId,
   getIsLoading,
-} from "../reducks/messages/selector";
-import { fetchMessageData } from "../reducks/messages/operations";
-import UserMessage from "../components/UserMessage";
-import RegisterMessage from "../components/RegisterMessage";
-import InputFormCard from "../components/InputFormCard";
-import IsLoading from "../components/IsLoading";
-import { Box } from "@material-ui/core";
-import { CHARACTER_LIMIT } from "../utils/constants";
+} from '../reducks/messages/selector';
+import { fetchMessageData } from '../reducks/messages/operations';
+import UserMessage from '../components/UserMessage';
+import RegisterMessage from '../components/RegisterMessage';
+import InputFormCard from '../components/InputFormCard';
+import IsLoading from '../components/IsLoading';
+import { Box } from '@material-ui/core';
+import { CHARACTER_LIMIT } from '../utils/constants';
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ const UsersPage = () => {
   const isLoading = getIsLoading(selector);
   const messagesList = getMessagesList(selector);
 
-  const [sentenceValue, setSentenceValue] = useState("");
+  const [sentenceValue, setSentenceValue] = useState('');
   const [typing, setTyping] = useState(false);
 
   const inputSentenceValue = useCallback(
@@ -39,26 +39,26 @@ const UsersPage = () => {
 
   const onClick = () => {
     return [
-      sentenceValue === ""
-        ? alert("メッセージが入力されていません")
+      sentenceValue === ''
+        ? alert('メッセージが入力されていません')
         : sentenceValue.length > CHARACTER_LIMIT
-        ? alert("メッセージは200文字以下で入力してください")
+        ? alert('メッセージは200文字以下で入力してください')
         : dispatch(
             sendMessage({
               sentence: sentenceValue,
               username: userName,
             })
           ),
-      setSentenceValue(""),
+      setSentenceValue(''),
     ];
   };
 
   const onKeyDown = (e) => {
-    return sentenceValue === "" && e.key === "Enter"
-      ? alert("メッセージが入力されていません")
-      : sentenceValue.length > CHARACTER_LIMIT && e.key === "Enter"
-      ? alert("メッセージは200文字以下で入力してください")
-      : e.key === "Enter" && !typing
+    return sentenceValue === '' && e.key === 'Enter'
+      ? alert('メッセージが入力されていません')
+      : sentenceValue.length > CHARACTER_LIMIT && e.key === 'Enter'
+      ? alert('メッセージは200文字以下で入力してください')
+      : e.key === 'Enter' && !typing
       ? [
           dispatch(
             sendMessage({
@@ -66,7 +66,7 @@ const UsersPage = () => {
               username: userName,
             })
           ),
-          setSentenceValue(""),
+          setSentenceValue(''),
         ]
       : undefined;
   };
@@ -101,11 +101,11 @@ const UsersPage = () => {
     <>
       <InputFormCard
         subTitle={`${userName}さん`}
-        subSentence="ようこそ！メッセージを入力し送信できます！"
-        textInputLabel="メッセージ"
+        subSentence='ようこそ！メッセージを入力し送信できます！'
+        textInputLabel='メッセージ'
         value={sentenceValue}
         onChange={inputSentenceValue}
-        buttonLabel="送信"
+        buttonLabel='送信'
         onClick={() => onClick()}
         onCompositionStart={() => setTyping(true)}
         onCompositionEnd={() => setTyping(false)}

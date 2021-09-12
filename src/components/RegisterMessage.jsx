@@ -1,33 +1,33 @@
-import React from "react";
-import { Typography, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import { WHITE, LIGHT_GRAY, GRAY } from "../utils/constants";
+import React from 'react';
+import { Typography, Grid } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { WHITE, LIGHT_GRAY, GRAY } from '../utils/constants';
 
 const useStyles = makeStyles({
   GridContainer: {
     backgroundColor: WHITE,
-    marginBottom: "0.5rem",
-    justifyContent: "flex-start",
+    marginBottom: '0.5rem',
+    justifyContent: 'flex-start',
   },
   GridItem: {
-    textAlign: "left",
+    textAlign: 'left',
     backgroundColor: LIGHT_GRAY,
-    padding: "1rem",
-    borderRadius: "0.5rem",
+    padding: '1rem',
+    borderRadius: '0.5rem',
   },
   SentenceStyle: {
-    fontSize: "0.8rem",
-    wordWrap: "break-word",
+    fontSize: '0.8rem',
+    wordWrap: 'break-word',
   },
   UsernameStyle: {
-    fontSize: "0.1rem",
-    textAlign: "right",
+    fontSize: '0.1rem',
+    textAlign: 'right',
   },
   TimeStyle: {
-    fontSize: "0.6rem",
+    fontSize: '0.6rem',
     color: GRAY,
-    alignSelf: "flex-end",
-    paddingLeft: "0.5rem",
+    alignSelf: 'flex-end',
+    paddingLeft: '0.5rem',
   },
 });
 

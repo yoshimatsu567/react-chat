@@ -1,5 +1,5 @@
-import * as Actions from "./actions";
-import initialState from "../store/initialState";
+import * as Actions from './actions';
+import initialState from '../store/initialState';
 
 export const MessagesReducer = (state = initialState.messages, action) => {
   switch (action.type) {

@@ -1,10 +1,10 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import { BLACK } from "../utils/constants";
+import React from 'react';
+import { Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { BLACK } from '../utils/constants';
 
 const useStyles = makeStyles({
-  LogOutButton: { color: BLACK, textAlign: "right" },
+  LogOutButton: { color: BLACK, textAlign: 'right' },
 });
 
 const HeaderLogOutButton = (props) => {
@@ -15,7 +15,7 @@ const HeaderLogOutButton = (props) => {
       {props.userName ? (
         <Button
           className={classes.LogOutButton}
-          color="inherit"
+          color='inherit'
           onClick={() => props.onClick()}
         >
           ログアウト

@@ -1,16 +1,16 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { getUserName } from "../reducks/messages/selector";
-import LogIn from "./LogInPage";
-import ChatRoom from "./UsersPage";
-import Header from "./Header";
-import { Box } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles";
-import { BLACK, WHITE } from "../utils/constants";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { getUserName } from '../reducks/messages/selector';
+import LogIn from './LogInPage';
+import ChatRoom from './UsersPage';
+import Header from './Header';
+import { Box } from '@material-ui/core';
+import { makeStyles } from '@material-ui/styles';
+import { BLACK, WHITE } from '../utils/constants';
 
 const useStyles = makeStyles({
   MainStyle: {
-    textAlign: "center",
+    textAlign: 'center',
     backgroundColor: WHITE,
     color: BLACK,
   },
