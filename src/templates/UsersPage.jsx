@@ -11,6 +11,7 @@ import { fetchMessageData } from '../reducks/messages/operations';
 import UserMessage from '../components/UserMessage';
 import RegisterMessage from '../components/RegisterMessage';
 import InputFormCard from '../components/InputFormCard';
+import ImportantIndication from '../components/ImportantIndication';
 import IsLoading from '../components/IsLoading';
 import { Box } from '@material-ui/core';
 import { CHARACTER_LIMIT } from '../utils/constants';
@@ -99,6 +100,7 @@ const UsersPage = () => {
 
   return (
     <>
+      <ImportantIndication />
       <InputFormCard
         subTitle={`${userName}さん`}
         subSentence='ようこそ！メッセージを入力し送信できます！'
